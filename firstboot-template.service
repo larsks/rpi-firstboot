@@ -1,0 +1,14 @@
+[Unit]
+%early% Before=sysinit.target
+%late% After=network-online.target
+ConditionPathIsDirectory=/boot/firstboot/STAGE.d
+ConditionPathExists=!/var/lib/firstboot/flag-STAGE
+
+[Service]
+Type=oneshot
+ExecStart=/bin/run-parts -v --exit-on-error /boot/firstboot/STAGE.d
+ExecStop=/bin/mkdir -p /var/lib/firstboot
+ExecStop=/bin/touch /var/lib/firstboot/flag-STAGE
+
+[Install]
+WantedBy=multi-user.target

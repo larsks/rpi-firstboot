@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo -n "Waiting until we have a default gateway."
+while :; do
+	default=$(ip route show | awk '$1 == "default" {print $3; exit}')
+	[ -n "$default" ] && break
+	echo -n .
+	sleep 1
+done
+echo
+
+echo -n "Waiting until we can ping $default."
+while ! ping -c 1 $default > /dev/null; do
+	echo -n .
+	sleep 1
+done
+echo

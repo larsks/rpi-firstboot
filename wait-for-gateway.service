@@ -1,0 +1,7 @@
+[Unit]
+Description=Wait until we can ping the default gateway
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/wait-for-gateway

@@ -1,6 +1,8 @@
 [Unit]
-%early% Before=sysinit.target
+%late% Wants=wait-for-gateway.service
+%late% After=wait-for-gateway.service
 %late% After=network-online.target
+%early% Before=sysinit.target
 ConditionPathIsDirectory=/boot/firstboot/STAGE.d
 ConditionPathExists=!/var/lib/firstboot/flag-STAGE
 
